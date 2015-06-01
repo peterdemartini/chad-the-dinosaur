@@ -2,9 +2,10 @@ React = require 'react'
 
 Game = React.createClass
   displayName: 'GameWindow'
+  name: 'Chad the Dinosaur'
 
   getInitialState: =>
-    name: 'Chad the Dinosaur'
+    null
 
   componentWillMount: =>
     console.log 'Will Mount...'
@@ -14,7 +15,7 @@ Game = React.createClass
 
   render: =>
     <div className="game">
-      <h1 className="loading">Chad the Dinosaur is loading...</h1>
+      <h1 className="loading">{@name} is loading...</h1>
     </div>
 
 module.exports = Game
