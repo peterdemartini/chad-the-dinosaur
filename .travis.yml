@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+- '0.10'
+after_success:
+  - node ./node_modules/gulp/bin/gulp.js build
+cache:
+  bundler: true
+  directories:
+  - node_modules
+deploy:
+  provider: s3
+  access_key_id: AKIAI3AV72UK77JAREJQ
+  secret_access_key:
+    secure: gD+UJgmcqt8WdI3seROdb0XxYgMAxkKzsFQNxhWoVuO8n42gmFTqM3RtJtxxRKFwUyRrSwJgHwVr75ZkYlrqv1JcoHOQ62bhZUT8gSfaGJ701gR6ugCg1E7DLq6YF2aqCxR1Erp1hS1bZlVwUAvWNXvM0Mo/jBSm4VymGdgMBqE=
+  bucket: chadthedinosaur.com
+  local-dir: public
+  acl: public_read
+  region: us-west-2
+  endpoint: s3-website-us-west-2.amazonaws.com
+  skip_cleanup: true
+  on:
+    repo: peterdemartini/chad-the-dinosaur
