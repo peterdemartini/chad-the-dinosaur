@@ -26,5 +26,5 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
-!public/main.js
-!public/styles.css
+public/main.js
+public/styles.css
