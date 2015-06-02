@@ -19,7 +19,7 @@ gulp.task 'server', ->
   gulp
     .src 'public'
     .pipe server
-      livereload: false,
+      livereload: true,
       directoryListing: false,
       open: true,
       fallback: 'index.html'

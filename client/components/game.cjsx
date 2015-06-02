@@ -2,20 +2,20 @@ React = require 'react'
 
 Game = React.createClass
   displayName: 'GameWindow'
-  name: 'Chad the Dinosaur'
+  gameName: 'Chad the Dinosaur'
 
-  getInitialState: =>
-    null
+  getInitialState: ->
+    loading: true
 
-  componentWillMount: =>
+  componentWillMount: ->
     console.log 'Will Mount...'
 
-  componentDidMount: =>
+  componentDidMount: ->
     console.log 'Did Mount'
 
-  render: =>
+  render: ->
     <div className="game">
-      <h1 className="loading">{@name} is loading...</h1>
+      <h1 className="title">{@gameName}</h1>
     </div>
 
 module.exports = Game
