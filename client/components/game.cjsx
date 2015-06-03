@@ -1,5 +1,6 @@
-React = require 'react'
+React      = require 'react'
 GameRunner = require '../game/game-runner'
+_          = require 'lodash'
 
 Game = React.createClass
   displayName: 'GameWindow'
@@ -18,9 +19,17 @@ Game = React.createClass
 
   componentDidMount: ->
     console.log 'Did Mount'
+    _.delay =>
+      @gameRunner.jump()
+    , 500
     setInterval =>
       @setState gameState: @gameRunner.getCurrentState()
-    , 100
+    , 10
+
+  componentWillUpdate: ->
+    width = React.findDOMNode(@).offsetWidth;
+    height = React.findDOMNode(@).offsetHeight;
+    @gameRunner.screenSize = width: width, height: height
 
   render: ->
     dinosaurTag = '<image xlink:href="/assets/dinosaur.svg" width="50" height="50" x="'+@state.gameState.dinosaur.x+'" y="'+@state.gameState.dinosaur.y+'">'
