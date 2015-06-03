@@ -2,13 +2,16 @@ GameRunner = require '../../../client/game/game-runner'
 
 describe 'GameRunner', ->
   beforeEach ->
-    @sut = new GameRunner
+    @jump =
+      run: sinon.stub()
+
+    @sut = new GameRunner jump: @jump
 
   describe '->getCurrentState',  ->
     describe 'when first called', ->
       beforeEach ->
         @sut.screenSize = width: 1000, height: 1000
-        @sut.setIninitialState()
+        @sut.setDefaultState()
         @state = @sut.getCurrentState()
 
       it 'should yield current state with a dinosaur center of screen', ->
@@ -18,9 +21,24 @@ describe 'GameRunner', ->
     describe 'when called with a different screenSize', ->
       beforeEach ->
         @sut.screenSize = width: 1250, height: 1250
-        @sut.setIninitialState()
+        @sut.setDefaultState()
         @state = @sut.getCurrentState()
 
       it 'should yield current state with a dinosaur center of screen', ->
         expect(@state.dinosaur.x).to.equal 1250 / 2
         expect(@state.dinosaur.y).to.equal 1250 / 2
+
+  describe '->up', ->
+    beforeEach ->
+      @jump =
+        run: sinon.stub()
+      @sut = new GameRunner jump: @jump
+      @sut.screenSize = width: 1000, height: 1000
+      @sut.setDefaultState()
+
+    describe 'when called', ->
+      beforeEach ->
+        @sut.up()
+
+      it 'should call commands.jump.run', ->
+        expect(@jump.run).to.have.been.calledWith x: 500, y: 500

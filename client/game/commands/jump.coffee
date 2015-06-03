@@ -1,36 +1,45 @@
 _ = require 'lodash'
 
-JUMP_DELAY=5
-JUMP_REPEAT=100
-JUMP_Y_CHANGE=100
+JUMP_DELAY=50
+JUMP_REPEAT=10
+JUMP_Y_CHANGE=10
 JUMP_X_CHANGE=1
 
 class Jump
   constructor: ->
     @jumping = false
 
-  run: (@startingState, @callback=->)=>
+  run: (startingState={}, callback=->)=>
     return if @jumping
     @jumping = true
-    @up()
-    _.delay @down, JUMP_REPEAT * JUMP_DELAY
-
-  down: () =>
-    _.times JUMP_REPEAT, (n) =>
+    @state = startingState
+    @callback = callback
+    bothDirections = (JUMP_REPEAT * 2)
+    _.times bothDirections + 1, (n) =>
+      console.log 'jump', n
       _.delay =>
-        newState =
-          x : @startingState.x + JUMP_X_CHANGE
-          y : @startingState.y + JUMP_Y_CHANGE
-        @callback newState
+        return @up() if n < JUMP_REPEAT
+        return @down() if n < bothDirections
+        @end()
       , JUMP_DELAY * n
 
-  up: () =>
-    _.times JUMP_REPEAT, (n) =>
-      _.delay =>
-        newState =
-          x : @startingState.x + JUMP_X_CHANGE
-          y : @startingState.y - JUMP_Y_CHANGE
-        @callback newState
-      , JUMP_DELAY * n
+  end: =>
+    @jumping = false
+    @startingState = {}
+    @callback = null
+
+  down: =>
+    console.log 'going down'
+    @state =
+      x : @state.x + JUMP_X_CHANGE
+      y : @state.y + JUMP_Y_CHANGE
+    @callback @state
+
+  up: =>
+    console.log 'going up'
+    @state =
+      x : @state.x + JUMP_X_CHANGE
+      y : @state.y - JUMP_Y_CHANGE
+    @callback @state
 
 module.exports = Jump

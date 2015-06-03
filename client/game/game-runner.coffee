@@ -5,15 +5,16 @@ Jump           = require './commands/jump'
 class GameRunner extends EventEmitter
   constructor: (dependencies={}) ->
     @screenSize = width: 1000, height: 1000
+    jump = dependencies.jump ? new Jump
     @commands =
-      jump: new Jump
-    @setIninitialState()
+      jump: jump
+    @state = {}
+    @setDefaultState()
 
-  setIninitialState: =>
-    @state =
-      dinosaur:
-        x: @screenSize.width / 2
-        y: @screenSize.height / 2
+  setDefaultState: =>
+    @setDinosaurState
+      x: @screenSize.width / 2
+      y: @screenSize.height / 2
 
   setDinosaurState: (state) =>
     @state.dinosaur = state
@@ -21,8 +22,18 @@ class GameRunner extends EventEmitter
   getDinosaurState: =>
     @state.dinosaur
 
-  jump: =>
+  up: =>
+    console.log 'move up'
     @commands.jump.run @getDinosaurState(), @setDinosaurState
+
+  left: =>
+    console.log 'move left'
+
+  right: =>
+    console.log 'move right'
+
+  down: =>
+    console.log 'move down'
 
   getCurrentState: =>
     @state

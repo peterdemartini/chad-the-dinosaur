@@ -16,12 +16,10 @@ Game = React.createClass
   componentWillMount: ->
     console.log 'Will Mount...'
     @gameRunner = new GameRunner
+    @bindCommands()
 
   componentDidMount: ->
     console.log 'Did Mount'
-    _.delay =>
-      @gameRunner.jump()
-    , 500
     setInterval =>
       @setState gameState: @gameRunner.getCurrentState()
     , 10
@@ -30,6 +28,18 @@ Game = React.createClass
     width = React.findDOMNode(@).offsetWidth;
     height = React.findDOMNode(@).offsetHeight;
     @gameRunner.screenSize = width: width, height: height
+
+  bindCommands: ->
+    document.onkeydown = (event) =>
+      event ?= window.event
+      code = event.which ? event.keyCode
+      console.log 'pressed key', code
+      switch code
+        when 37 then @gameRunner.left()
+        when 38 then @gameRunner.up()
+        when 39 then @gameRunner.right()
+        when 40 then @gameRunner.down()
+      return true
 
   render: ->
     dinosaurTag = '<image xlink:href="/assets/dinosaur.svg" width="50" height="50" x="'+@state.gameState.dinosaur.x+'" y="'+@state.gameState.dinosaur.y+'">'
