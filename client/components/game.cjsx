@@ -23,18 +23,15 @@ Game = React.createClass
     , 100
 
   render: ->
-    dinosaurTag = React.createElement 'image',
-      'xlink:href': '/assets/dinosaur.svg'
-      width: 50
-      height: 50
-      x: @state.gameState.dinosaur.x
-      y: @state.gameState.dinosaur.y
+    dinosaurTag = '<image xlink:href="/assets/dinosaur.svg" width="50" height="50" x="'+@state.gameState.dinosaur.x+'" y="'+@state.gameState.dinosaur.y+'">'
 
-    <div className="game">
+    <div className="game-container">
       <h1 className="title">{@gameName}</h1>
-      <svg width="100%" height="100%" dangerouslySetInnerHTML={__html: dinosaurTag}>
+      <svg width="100%" height="100%" className="game">
         <rect width="100%" height="100%" style={{fill:'rgb(245,245,245)'}} />
-        {dinosaurTag}
+        <g>
+          <svg dangerouslySetInnerHTML={__html: dinosaurTag}></svg>
+        </g>
       </svg>
     </div>
 
