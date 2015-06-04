@@ -1,8 +1,8 @@
 _ = require 'lodash'
 
-X_PIXELS=10
+X_PIXELS=5
 NUMBER_OF_FRAMES=5
-FRAME_LENGTH=5
+FRAME_LENGTH=25
 
 class Left
   constructor: ->
