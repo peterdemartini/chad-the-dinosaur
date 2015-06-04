@@ -3,7 +3,7 @@ GameRunner = require '../../../client/game/game-runner'
 describe 'GameRunner', ->
   beforeEach ->
     @jump =
-      run: sinon.stub()
+      start: sinon.stub()
 
     @sut = new GameRunner jump: @jump
 
@@ -31,7 +31,7 @@ describe 'GameRunner', ->
   describe '->up', ->
     beforeEach ->
       @jump =
-        run: sinon.stub()
+        start: sinon.stub()
       @sut = new GameRunner jump: @jump
       @sut.screenSize = width: 1000, height: 1000
       @sut.setDefaultState()
@@ -41,4 +41,34 @@ describe 'GameRunner', ->
         @sut.up()
 
       it 'should call commands.jump.run', ->
-        expect(@jump.run).to.have.been.calledWith x: 500, y: 500
+        expect(@jump.start).to.have.been.calledWith x: 500, y: 500
+
+  describe '->left', ->
+    beforeEach ->
+      @left =
+        start: sinon.stub()
+      @sut = new GameRunner left: @left
+      @sut.screenSize = width: 1000, height: 1000
+      @sut.setDefaultState()
+
+    describe 'when called', ->
+      beforeEach ->
+        @sut.left()
+
+      it 'should call commands.jump.run', ->
+        expect(@left.start).to.have.been.calledWith x: 500, y: 500
+
+  describe '->right', ->
+    beforeEach ->
+      @right =
+        start: sinon.stub()
+      @sut = new GameRunner right: @right
+      @sut.screenSize = width: 1000, height: 1000
+      @sut.setDefaultState()
+
+    describe 'when called', ->
+      beforeEach ->
+        @sut.right()
+
+      it 'should call commands.jump.run', ->
+        expect(@right.start).to.have.been.calledWith x: 500, y: 500

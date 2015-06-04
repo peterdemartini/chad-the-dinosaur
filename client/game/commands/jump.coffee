@@ -9,14 +9,13 @@ class Jump
   constructor: ->
     @jumping = false
 
-  run: (startingState={}, callback=->)=>
+  start: (startingState={}, callback=->)=>
     return if @jumping
     @jumping = true
     @state = startingState
     @callback = callback
     bothDirections = (JUMP_REPEAT * 2)
     _.times bothDirections + 1, (n) =>
-      console.log 'jump', n
       _.delay =>
         return @up() if n < JUMP_REPEAT
         return @down() if n < bothDirections

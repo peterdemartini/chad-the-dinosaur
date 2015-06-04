@@ -1,13 +1,19 @@
 {EventEmitter} = require 'events'
 _              = require 'lodash'
 Jump           = require './commands/jump'
+Left           = require './commands/left'
+Right          = require './commands/right'
 
 class GameRunner extends EventEmitter
   constructor: (dependencies={}) ->
     @screenSize = width: 1000, height: 1000
     jump = dependencies.jump ? new Jump
+    left = dependencies.left ? new Left
+    right = dependencies.right ? new Right
     @commands =
       jump: jump
+      left: left
+      right: right
     @state = {}
     @setDefaultState()
 
@@ -23,14 +29,13 @@ class GameRunner extends EventEmitter
     @state.dinosaur
 
   up: =>
-    console.log 'move up'
-    @commands.jump.run @getDinosaurState(), @setDinosaurState
+    @commands.jump.start @getDinosaurState(), @setDinosaurState
 
   left: =>
-    console.log 'move left'
+    @commands.left.start @getDinosaurState(), @setDinosaurState
 
   right: =>
-    console.log 'move right'
+    @commands.right.start @getDinosaurState(), @setDinosaurState
 
   down: =>
     console.log 'move down'
