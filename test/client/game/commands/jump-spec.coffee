@@ -2,7 +2,8 @@ Jump = require '../../../../client/game/commands/jump'
 
 describe 'Jump', ->
   beforeEach ->
-    @sut = new Jump
+    @framer = start: sinon.stub().yields(0)
+    @sut = new Jump framer: @framer
 
   describe '->start', ->
     describe 'when called with state', ->

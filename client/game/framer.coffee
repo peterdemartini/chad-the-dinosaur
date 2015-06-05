@@ -4,9 +4,7 @@ class Framer
 
   start: (callback=->) =>
     _.times @numberOfFrames, (n) =>
-      n = 1 if n == 0
-      _.delay =>
-        callback(n)
-      @frameLength * n
+      done = (n) => callback(n)
+      _.delay done, @frameLength * n, n
 
 module.exports = Framer

@@ -16,4 +16,4 @@ describe 'Framer', ->
       @sut.start (@n) => done()
 
     it 'should have the correct n property', ->
-      expect(@n).to.equal 1
+      expect(@n).to.equal 0

@@ -22,7 +22,7 @@ Game = React.createClass
     console.log 'Did Mount'
     setInterval =>
       @setState gameState: @gameRunner.getCurrentState()
-    , 10
+    , 25
 
   componentWillUpdate: ->
     width = React.findDOMNode(@).offsetWidth;
@@ -39,9 +39,9 @@ Game = React.createClass
         when 38 then @gameRunner.up()
         when 39 then @gameRunner.right()
         when 40 then @gameRunner.down()
-      return true
 
   render: ->
+    console.log 'rendering'
     dinosaurTag = '<image xlink:href="/assets/dinosaur.svg" width="50" height="50" x="'+@state.gameState.dinosaur.x+'" y="'+@state.gameState.dinosaur.y+'">'
 
     <div className="game-container">

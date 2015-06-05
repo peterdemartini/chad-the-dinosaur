@@ -4,7 +4,7 @@ Framer = require '../framer'
 
 class Left
   constructor: (dependencies={})->
-    @X_PIXELS=5
+    @X_PIXELS=2
     @NUMBER_OF_FRAMES=10
     @FRAME_LENGTH=10
     @framer = dependencies.framer ? new Framer @NUMBER_OF_FRAMES, @FRAME_LENGTH

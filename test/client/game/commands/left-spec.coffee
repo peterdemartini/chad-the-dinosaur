@@ -2,7 +2,8 @@ Left = require '../../../../client/game/commands/left'
 
 describe 'Left', ->
   beforeEach ->
-    @sut = new Left
+    @framer = start: sinon.stub().yields(0)
+    @sut = new Left framer: @framer
 
   describe '->start', ->
     describe 'when called with state', ->
@@ -16,5 +17,5 @@ describe 'Left', ->
       beforeEach (done) ->
         @sut.start {x: 200, y: 0}, (@state) => done()
 
-      it 'should have a state of x=195 and y=2', ->
-        expect(@state).to.deep.equal x:195, y:0
+      it 'should have a state of x=198 and y=2', ->
+        expect(@state).to.deep.equal x:198, y:0
