@@ -1,10 +1,9 @@
-{EventEmitter} = require 'events'
 _              = require 'lodash'
 Jump           = require './commands/jump'
 Left           = require './commands/left'
 Right          = require './commands/right'
 
-class GameRunner extends EventEmitter
+class GameRunner
   constructor: (dependencies={}) ->
     @screenSize = width: 1000, height: 1000
     jump = dependencies.jump ? new Jump

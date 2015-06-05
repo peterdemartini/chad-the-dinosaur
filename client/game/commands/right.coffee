@@ -1,17 +1,16 @@
 _ = require 'lodash'
+Framer = require '../framer'
 
-X_PIXELS=5
-NUMBER_OF_FRAMES=5
-FRAME_LENGTH=25
+class Left
+  constructor: (dependencies={})->
+    @X_PIXELS=5
+    @NUMBER_OF_FRAMES=10
+    @FRAME_LENGTH=10
+    @framer = dependencies.framer ? new Framer @NUMBER_OF_FRAMES, @FRAME_LENGTH
 
-class Right
-  constructor: ->
+  start: (state={}, callback=->)=>
+    @framer.start =>
+      state.x += @X_PIXELS if state.x > 0
+      callback state
 
-  start: (state, callback=->)=>
-    _.times NUMBER_OF_FRAMES, (n) =>
-      _.delay =>
-        state.x += X_PIXELS
-        callback state
-      , FRAME_LENGTH * n
-
-module.exports = Right
+module.exports = Left
