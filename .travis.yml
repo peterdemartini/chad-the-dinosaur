@@ -2,13 +2,12 @@ language: node_js
 node_js:
 - '0.10'
 after_success:
+  - ./run-physicsjs.sh
   - node ./node_modules/gulp/bin/gulp.js build
 cache:
   bundler: true
   directories:
   - node_modules
-after_success:
-  - ./run-physicsjs.sh
 deploy:
   provider: s3
   access_key_id: AKIAI3AV72UK77JAREJQ
