@@ -34,7 +34,7 @@ gulp.task 'watch', ->
     webpack: [
       './client/**/*.js'
       './client/**/*.jsx'
-      './client/**/*.cjsx'
+      # './client/**/*.cjsx'
       './client/**/*.coffee'
     ]
 
