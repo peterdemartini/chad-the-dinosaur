@@ -1,5 +1,7 @@
 RealPhysicsJS   = require '../PhysicsJS/'
 ChadTheDinosaur = require './bodies/chad-the-dinosaur'
+Backdrop        = require './bodies/backdrop'
+config          = require './config'
 _               = require 'lodash'
 
 class GameRunner
@@ -27,6 +29,7 @@ class GameRunner
   start: =>
     @addRender()
     @addChad()
+    @addBackdrop()
     @addBehaviors()
     @onTick()
     @onStep()
@@ -36,6 +39,10 @@ class GameRunner
   addChad: =>
     @dinosaur = new ChadTheDinosaur @screen, PhysicsJS: @PhysicsJS
     @world.add @dinosaur.add()
+
+  addBackdrop: =>
+    @backdrop = new Backdrop @screen, PhysicsJS: @PhysicsJS
+    @world.add @backdrop.add()
 
   up: =>
     @dinosaur.jump()
@@ -47,7 +54,7 @@ class GameRunner
     @dinosaur.right()
 
   addRender: =>
-    config =
+    renderConfig =
       el: @element
       width: @screen.width
       height: @screen.height
@@ -57,7 +64,7 @@ class GameRunner
           strokeStyle: '#000',
           lineWidth: 1,
           fillStyle: '#000'
-    renderer = @PhysicsJS.renderer 'canvas', config
+    renderer = @PhysicsJS.renderer 'canvas', renderConfig
     @world.add renderer
 
   addBehaviors: =>
@@ -68,11 +75,11 @@ class GameRunner
     sweepPrune = @PhysicsJS.behavior 'sweep-prune'
     @world.add sweepPrune
 
-    viewportBounds = @PhysicsJS.aabb 0, 0, @screen.width, @screen.height - 100
+    viewportBounds = @PhysicsJS.aabb 0, 0, @screen.width, @screen.height - config.GRASS.HEIGHT
     edgeConfig =
       aabb: viewportBounds,
-      restitution: 0.99,
-      cof: 0.99
+      restitution: config.GAME.RESTITUTION,
+      cof: config.GAME.COF
     edgeDetection = @PhysicsJS.behavior 'edge-collision-detection', edgeConfig
     @world.add edgeDetection
 

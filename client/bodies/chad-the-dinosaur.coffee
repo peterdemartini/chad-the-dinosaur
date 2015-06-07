@@ -1,17 +1,14 @@
 _           = require 'lodash'
 DefaultBody = require './default-body'
-
-LEFT_RIGHT_MOVES=5
-LEFT_RIGHT_X_ADD=5
-LEFT_RIGHT_DELAY=10
+config      = require '../config'
 
 class ChadTheDinosaur extends DefaultBody
   constructor: (screen, dependencies={}) ->
     super screen, dependencies
-    @width = 50
-    @height = 50
+    @width = config.CHAD.WIDTH
+    @height = config.CHAD.HEIGHT
     @jumping = false
-    @TYPE = 'chad-the-dinosaur'
+    @TYPE = config.CHAD.TYPE
 
   getImage: =>
     image = new Image
@@ -22,10 +19,10 @@ class ChadTheDinosaur extends DefaultBody
 
   getProperties: =>
     properties =
-      uid: 1
+      uid: config.CHAD.UID
       view: @getImage()
-      x: 50
-      y: @screen.height - 100
+      x: config.CHAD.START_X
+      y: @screen.height - config.GRASS.HEIGHT
       width: @width
       height: @height
       vx: 0.2
@@ -48,21 +45,21 @@ class ChadTheDinosaur extends DefaultBody
 
   left: (callback=->) =>
     return callback new Error('already jumping') if @jumping
-    done = _.after LEFT_RIGHT_MOVES, callback
+    done = _.after config.CHAD.LR_MOVES, callback
     moveLeft = =>
-      @object.state.pos.x -= LEFT_RIGHT_X_ADD
+      @object.state.pos.x -= config.CHAD.LR_X_ADD
       done()
-    _.times LEFT_RIGHT_MOVES, (n) =>
-      _.delay moveLeft, LEFT_RIGHT_DELAY * n
+    _.times config.CHAD.LR_MOVES, (n) =>
+      _.delay moveLeft, config.CHAD.LR_DELAY * n
 
   right: (callback=->) =>
     return callback new Error('already jumping') if @jumping
-    done = _.after LEFT_RIGHT_MOVES, callback
+    done = _.after config.CHAD.LR_MOVES, callback
     moveRight = =>
-      @object.state.pos.x += LEFT_RIGHT_X_ADD
+      @object.state.pos.x += config.CHAD.LR_X_ADD
       done()
-    _.times LEFT_RIGHT_MOVES, (n) =>
-      _.delay moveRight, LEFT_RIGHT_DELAY * n
+    _.times config.CHAD.LR_MOVES, (n) =>
+      _.delay moveRight, config.CHAD.LR_DELAY * n
 
   onStep: =>
 
