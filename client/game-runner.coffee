@@ -1,5 +1,6 @@
-RealPhysicsJS = require '../PhysicsJS/'
-ChadTheDinosaur = require './bodies/chad-the-dinosaur.coffee'
+RealPhysicsJS   = require '../PhysicsJS/'
+ChadTheDinosaur = require './bodies/chad-the-dinosaur'
+_               = require 'lodash'
 
 class GameRunner
   constructor: (@element, dependencies={}) ->
@@ -16,6 +17,12 @@ class GameRunner
   onStep: =>
     @world.on 'step', =>
       @world.render()
+      @dinosaur.onStep()
+
+  onCollision: =>
+    @world.on 'collisions:detected', (data) =>
+      _.each data.collisions, (impact) =>
+        @dinosaur.onCollision impact
 
   start: =>
     @addRender()
@@ -23,11 +30,15 @@ class GameRunner
     @addBehaviors()
     @onTick()
     @onStep()
+    @onCollision()
     @PhysicsJS.util.ticker.start()
 
   addChad: =>
-    dinosaur = new ChadTheDinosaur PhysicsJS: @PhysicsJS
-    @world.add dinosaur.add()
+    @dinosaur = new ChadTheDinosaur @screen, PhysicsJS: @PhysicsJS
+    @world.add @dinosaur.add()
+
+  up: =>
+    @dinosaur.jump()
 
   addRender: =>
     config =
@@ -44,10 +55,12 @@ class GameRunner
     @world.add renderer
 
   addBehaviors: =>
-    gravity = @PhysicsJS.behavior 'body-impulse-response'
+    collisions = @PhysicsJS.behavior 'body-impulse-response'
+    @world.add collisions
+    gravity = @PhysicsJS.behavior 'constant-acceleration'
     @world.add gravity
-    collision = @PhysicsJS.behavior 'constant-acceleration'
-    @world.add collision
+    sweepPrune = @PhysicsJS.behavior 'sweep-prune'
+    @world.add sweepPrune
 
     viewportBounds = @PhysicsJS.aabb 0, 0, @screen.width, @screen.height - 100
     edgeConfig =

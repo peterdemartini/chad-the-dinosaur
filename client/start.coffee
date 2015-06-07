@@ -12,15 +12,14 @@ class Starter
     @bindCommands()
 
   bindCommands: =>
-    $(document).keypress (event) =>
-      event ?= window.event
+    document.onkeypress = (event) =>
       code = event.which ? event.keyCode
       console.log 'pressed key', code
       switch code
-        when 37 then @gameRunner.left()
-        when 38 then @gameRunner.up()
-        when 39 then @gameRunner.right()
-        when 40 then @gameRunner.down()
+        when 97 then @gameRunner.left()
+        when 119 then @gameRunner.up()
+        when 100 then @gameRunner.right()
+        when 115 then @gameRunner.down()
 
 starter = new Starter
 starter.run()
