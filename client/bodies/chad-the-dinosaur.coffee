@@ -1,4 +1,9 @@
+_           = require 'lodash'
 DefaultBody = require './default-body'
+
+LEFT_RIGHT_MOVES=5
+LEFT_RIGHT_X_ADD=5
+LEFT_RIGHT_DELAY=10
 
 class ChadTheDinosaur extends DefaultBody
   constructor: (screen, dependencies={}) ->
@@ -40,6 +45,24 @@ class ChadTheDinosaur extends DefaultBody
     @object.state.vel.set(0.2, -0.2)
     @object.sleep false
     @jumping = true
+
+  left: (callback=->) =>
+    return callback new Error('already jumping') if @jumping
+    done = _.after LEFT_RIGHT_MOVES, callback
+    moveLeft = =>
+      @object.state.pos.x -= LEFT_RIGHT_X_ADD
+      done()
+    _.times LEFT_RIGHT_MOVES, (n) =>
+      _.delay moveLeft, LEFT_RIGHT_DELAY * n
+
+  right: (callback=->) =>
+    return callback new Error('already jumping') if @jumping
+    done = _.after LEFT_RIGHT_MOVES, callback
+    moveRight = =>
+      @object.state.pos.x += LEFT_RIGHT_X_ADD
+      done()
+    _.times LEFT_RIGHT_MOVES, (n) =>
+      _.delay moveRight, LEFT_RIGHT_DELAY * n
 
   onStep: =>
 

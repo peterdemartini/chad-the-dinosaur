@@ -40,6 +40,12 @@ class GameRunner
   up: =>
     @dinosaur.jump()
 
+  left: =>
+    @dinosaur.left()
+
+  right: =>
+    @dinosaur.right()
+
   addRender: =>
     config =
       el: @element
@@ -69,6 +75,5 @@ class GameRunner
       cof: 0.99
     edgeDetection = @PhysicsJS.behavior 'edge-collision-detection', edgeConfig
     @world.add edgeDetection
-
 
 module.exports = GameRunner

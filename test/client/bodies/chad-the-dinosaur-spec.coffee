@@ -83,6 +83,48 @@ describe 'ChadTheDinosaur', ->
       it 'should set jumping to true', ->
         expect(@sut.jumping).to.be.true
 
+  describe '->left', ->
+    describe 'while jumping', ->
+      beforeEach (done) ->
+        @sut.jumping = true
+        @sut.left (@error) => done()
+
+      it 'should not have an error', ->
+        expect(@error).to.exist
+
+    describe 'while not jumping', ->
+      beforeEach (done) ->
+        @sut.jumping = false
+        @sut.object = state: pos: {x: 100, y: 0}
+        @sut.left (@error) => done()
+
+      it 'should not have an error', ->
+        expect(@error).to.not.exist
+
+      it 'should set the pos on the object', ->
+        expect(@sut.object.state.pos.x).to.equal 75
+
+  describe '->right', ->
+    describe 'while jumping', ->
+      beforeEach (done) ->
+        @sut.jumping = true
+        @sut.right (@error) => done()
+
+      it 'should not have an error', ->
+        expect(@error).to.exist
+
+    describe 'while not jumping', ->
+      beforeEach (done) ->
+        @sut.jumping = false
+        @sut.object = state: pos: {x: 100, y: 0}
+        @sut.right (@error) => done()
+
+      it 'should not have an error', ->
+        expect(@error).to.not.exist
+
+      it 'should set the pos on the object', ->
+        expect(@sut.object.state.pos.x).to.equal 125
+
   describe '->onStep', ->
     it 'should be a function', ->
       expect(@sut.onStep).to.be.a 'function'

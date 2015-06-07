@@ -122,6 +122,24 @@ describe 'GameRunner', ->
     it 'should call dinosaur.jump', ->
       expect(@sut.dinosaur.jump).to.have.been.called
 
+  describe '->left', ->
+    beforeEach ->
+      @sut.dinosaur =
+        left: sinon.spy()
+      @sut.left()
+
+    it 'should call dinosaur.left', ->
+      expect(@sut.dinosaur.left).to.have.been.called
+
+  describe '->right', ->
+    beforeEach ->
+      @sut.dinosaur =
+        right: sinon.spy()
+      @sut.right()
+
+    it 'should call dinosaur.right', ->
+      expect(@sut.dinosaur.right).to.have.been.called
+
   describe '->onCollision', ->
     beforeEach ->
       @sut.world.on = sinon.stub().yields collisions: []
