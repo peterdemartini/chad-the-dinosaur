@@ -66,11 +66,6 @@ describe 'GameRunner', ->
         width: 1000
         height: 600
         meta: false
-        styles:
-          circle:
-            strokeStyle: '#000',
-            lineWidth: 1,
-            fillStyle: '#000'
 
       expect(PhysicsJS.renderer).to.have.been.calledWith 'canvas', config
 

@@ -14,4 +14,6 @@ module.exports =
     LR_DELAY:10
     HEIGHT:50
     WIDTH:50
+    VX: 0.2
+    VY: 0.01
     TYPE:'chad-the-dinosaur'

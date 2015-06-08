@@ -138,14 +138,22 @@ describe 'ChadTheDinosaur', ->
 
       describe 'when called with the incorrect types', ->
         beforeEach ->
-          @sut.onCollision(bodyA: {typeObj: 'not-the-dinosaur'}, bodyB: {uid: 3})
+          impact =
+            pos: x: 25, y: 0
+            bodyA: typeObj: 'not-the-dinosaur'
+            bodyB: uid: 5
+          @sut.onCollision(impact)
 
         it 'should not call sleep', ->
           expect(@sut.object.sleep).to.not.have.been.called
 
       describe 'when called with the correct types', ->
         beforeEach ->
-          @sut.onCollision(bodyA: {typeObj: @sut.TYPE}, bodyB: {uid: 2})
+          impact =
+            pos: x: 0, y: 25
+            bodyA: typeObj: 'chad-the-dinosaur'
+            bodyB: uid: 5
+          @sut.onCollision(impact)
 
         it 'should call sleep', ->
           expect(@sut.object.sleep).to.have.been.calledWith true

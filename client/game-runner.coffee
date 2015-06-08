@@ -59,11 +59,6 @@ class GameRunner
       width: @screen.width
       height: @screen.height
       meta: false
-      styles:
-        circle:
-          strokeStyle: '#000',
-          lineWidth: 1,
-          fillStyle: '#000'
     renderer = @PhysicsJS.renderer 'canvas', renderConfig
     @world.add renderer
 

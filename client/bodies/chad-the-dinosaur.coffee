@@ -25,8 +25,8 @@ class ChadTheDinosaur extends DefaultBody
       y: @screen.height - config.GRASS.HEIGHT
       width: @width
       height: @height
-      vx: 0.2
-      vy: 0.01
+      vx: config.CHAD.VX
+      vy: config.CHAD.VY
       restitution: 1
       cof: 0
       typeObj: 'chad-the-dinosaur'
@@ -65,7 +65,7 @@ class ChadTheDinosaur extends DefaultBody
 
   onCollision: (impact)=>
     {bodyA, bodyB} = impact
-    if @jumping &&  bodyA.typeObj == @TYPE && bodyB.uid == 2
+    if @jumping &&  bodyA.typeObj == @TYPE && impact.pos.y == 25
       @jumping = false
       @object.sleep true
 
