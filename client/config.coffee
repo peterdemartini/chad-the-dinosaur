@@ -9,11 +9,10 @@ module.exports =
   CHAD:
     UID: 1
     START_X:50
-    LR_MOVES:5
-    LR_X_ADD:5
-    LR_DELAY:10
+    MOVE_DELAY: 50
+    MOVE_X: 5
     HEIGHT:50
     WIDTH:50
-    VX: 0.2
-    VY: 0.01
+    VX: 0.3
+    VY: 0.02
     TYPE:'chad-the-dinosaur'

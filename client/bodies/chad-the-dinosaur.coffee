@@ -8,6 +8,8 @@ class ChadTheDinosaur extends DefaultBody
     @width = config.CHAD.WIDTH
     @height = config.CHAD.HEIGHT
     @jumping = false
+    @movingLeft = false
+    @movingRight = false
     @TYPE = config.CHAD.TYPE
 
   getImage: =>
@@ -44,26 +46,33 @@ class ChadTheDinosaur extends DefaultBody
     @jumping = true
 
   left: (callback=->) =>
-    return callback new Error('already jumping') if @jumping
-    done = _.after config.CHAD.LR_MOVES, callback
-    moveLeft = =>
-      @object.state.pos.x -= config.CHAD.LR_X_ADD
-      done()
-    _.times config.CHAD.LR_MOVES, (n) =>
-      _.delay moveLeft, config.CHAD.LR_DELAY * n
+    return callback new Error('already moving') if @isMoving()
+    @movingLeft = true
+    @object.sleep false
+    done = =>
+      @movingLeft = false
+      @object.sleep true
+      callback()
+    _.delay done, config.CHAD.MOVE_DELAY
 
   right: (callback=->) =>
-    return callback new Error('already jumping') if @jumping
-    done = _.after config.CHAD.LR_MOVES, callback
-    moveRight = =>
-      @object.state.pos.x += config.CHAD.LR_X_ADD
-      done()
-    _.times config.CHAD.LR_MOVES, (n) =>
-      _.delay moveRight, config.CHAD.LR_DELAY * n
+    return callback new Error('already moving') if @isMoving()
+    @movingRight = true
+    @object.sleep false
+    done = =>
+      @movingRight = false
+      @object.sleep true
+      callback()
+    _.delay done, config.CHAD.MOVE_DELAY
+
+  isMoving: =>
+    @jumping || @movingRight || @movingLeft
 
   onStep: =>
+    @object.state.pos.x -= config.CHAD.MOVE_X if @movingLeft
+    @object.state.pos.x += config.CHAD.MOVE_X if @movingRight
 
-  onCollision: (impact)=>
+  onCollision: (impact) =>
     {bodyA, bodyB} = impact
     if @jumping &&  bodyA.typeObj == @TYPE && impact.pos.y == 25
       @jumping = false

@@ -52,8 +52,8 @@ describe 'ChadTheDinosaur', ->
         y: 200
         width: 50
         height: 50
-        vx: 0.2
-        vy: 0.01
+        vx: 0.3
+        vy: 0.02
         restitution: 1
         cof: 0
         typeObj: 'chad-the-dinosaur'
@@ -84,7 +84,7 @@ describe 'ChadTheDinosaur', ->
         expect(@sut.jumping).to.be.true
 
   describe '->left', ->
-    describe 'while jumping', ->
+    describe 'while moving', ->
       beforeEach (done) ->
         @sut.jumping = true
         @sut.left (@error) => done()
@@ -92,20 +92,19 @@ describe 'ChadTheDinosaur', ->
       it 'should not have an error', ->
         expect(@error).to.exist
 
-    describe 'while not jumping', ->
+    describe 'while not moving', ->
       beforeEach (done) ->
-        @sut.jumping = false
-        @sut.object = state: pos: {x: 100, y: 0}
+        @sut.object = sleep: sinon.spy()
         @sut.left (@error) => done()
 
       it 'should not have an error', ->
         expect(@error).to.not.exist
 
-      it 'should set the pos on the object', ->
-        expect(@sut.object.state.pos.x).to.equal 75
+      it 'should call sleep twice', ->
+        expect(@sut.object.sleep).to.have.been.called.twice
 
   describe '->right', ->
-    describe 'while jumping', ->
+    describe 'while moving', ->
       beforeEach (done) ->
         @sut.jumping = true
         @sut.right (@error) => done()
@@ -113,21 +112,51 @@ describe 'ChadTheDinosaur', ->
       it 'should not have an error', ->
         expect(@error).to.exist
 
-    describe 'while not jumping', ->
+    describe 'while not moving', ->
       beforeEach (done) ->
-        @sut.jumping = false
-        @sut.object = state: pos: {x: 100, y: 0}
+        @sut.object = sleep: sinon.spy()
         @sut.right (@error) => done()
 
       it 'should not have an error', ->
         expect(@error).to.not.exist
 
-      it 'should set the pos on the object', ->
-        expect(@sut.object.state.pos.x).to.equal 125
+      it 'should call sleep twice', ->
+        expect(@sut.object.sleep).to.have.been.called.twice
 
   describe '->onStep', ->
-    it 'should be a function', ->
-      expect(@sut.onStep).to.be.a 'function'
+    beforeEach ->
+      @sut.movingLeft = false
+      @sut.movingRight = false
+      @sut.jumping = false
+      @sut.object =
+        state:
+          x: 0
+          y: 0
+    describe 'when called and not moving', ->
+      beforeEach ->
+        @sut.object.state = pos: x: 10
+        @sut.onStep()
+
+      it 'should move 5 to the left', ->
+        expect(@sut.object.state.pos.x).to.equal 10
+
+    describe 'when called while moving left', ->
+      beforeEach ->
+        @sut.object.state = pos: x: 10
+        @sut.movingLeft = true
+        @sut.onStep()
+
+      it 'should move 5 to the left', ->
+        expect(@sut.object.state.pos.x).to.equal 5
+
+    describe 'when called while moving right', ->
+      beforeEach ->
+        @sut.object.state = pos: x: 10
+        @sut.movingRight = true
+        @sut.onStep()
+
+      it 'should move 5 to the left', ->
+        expect(@sut.object.state.pos.x).to.equal 15
 
   describe '->onCollision', ->
     describe 'when called when jumping', ->
