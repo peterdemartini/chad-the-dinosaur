@@ -5,34 +5,34 @@ class RobotChicken extends DefaultBody
   constructor: (uid, screen, dependencies={}) ->
     super screen, dependencies
     @uid = uid
-    @width = config.ROBOT_CHICKEN.WIDTH
-    @height = config.ROBOT_CHICKEN.HEIGHT
+    @width = config.ROCKET.WIDTH
+    @height = config.ROCKET.HEIGHT
 
-  add: =>
-    @object = @PhysicsJS.body 'rectangle', @getProperties()
+  add: (startPos={}) =>
+    @object = @PhysicsJS.body 'rectangle', @getProperties(startPos)
     @object
 
   getImage: =>
     image = new Image
-    image.src = '/assets/robot-chicken.svg'
+    image.src = '/assets/rocket.svg'
     image.width = @width
     image.height = @height
     return image
 
-  getProperties: =>
+  getProperties: (startPos={}) =>
     properties =
       uid: @uid
       view: @getImage()
-      x: @screen.width - config.ROBOT_CHICKEN.START_X
-      y: @screen.height - config.GRASS.HEIGHT - config.ROBOT_CHICKEN.START_Y
+      x: startPos.x
+      y: startPos.y - 10
       width: @width
       height: @height
-      vx: config.ROBOT_CHICKEN.VX
-      vy: config.ROBOT_CHICKEN.VY
+      vx: config.ROCKET.VX
+      vy: config.ROCKET.VY
       restitution: 0
       cof: 1
       treatment: 'kinematic'
-      typeObj: config.ROBOT_CHICKEN.TYPE
+      typeObj: config.ROCKET.TYPE
     return properties
 
 module.exports = RobotChicken

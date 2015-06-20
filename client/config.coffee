@@ -19,10 +19,15 @@ module.exports =
   ROBOT_CHICKEN:
     START_X:50
     START_Y:50
-    MOVE_DELAY: 50
-    MOVE_X: 2
     HEIGHT: 20
     WIDTH: 20
     VX: -0.1
     VY: 0
     TYPE:'robot-chicken'
+  ROCKET:
+    MOVE_DELAY: 50
+    HEIGHT: 10
+    WIDTH: 15
+    VX: 0.3
+    VY: 0
+    TYPE: 'rocket'

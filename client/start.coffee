@@ -16,6 +16,7 @@ class Starter
       code = event.which ? event.keyCode
       console.log 'pressed key', code
       switch code
+        when 32 then @gameRunner.fire()
         when 97 then @gameRunner.left()
         when 119 then @gameRunner.up()
         when 100 then @gameRunner.right()

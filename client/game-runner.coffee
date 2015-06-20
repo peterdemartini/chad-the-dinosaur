@@ -1,6 +1,7 @@
 RealPhysicsJS   = require '../PhysicsJS/'
 ChadTheDinosaur = require './bodies/chad-the-dinosaur'
-RobotChicken = require './bodies/robot-chicken'
+Rocket          = require './bodies/rocket'
+RobotChicken    = require './bodies/robot-chicken'
 Backdrop        = require './bodies/backdrop'
 config          = require './config'
 _               = require 'lodash'
@@ -11,6 +12,7 @@ class GameRunner
     @world = @PhysicsJS()
     @screen = width: 0, height: 0
     @chickens = {}
+    @rockets = {}
 
   setScreen: (@screen) =>
 
@@ -61,6 +63,12 @@ class GameRunner
 
   right: =>
     @dinosaur.right()
+
+  fire: =>
+    uid = _.random(1200, 1500)
+    rocket = new Rocket uid, @screen, PhysicsJS: @PhysicsJS
+    @world.add rocket.add(@dinosaur.object.state.pos)
+    @rockets[uid] = rocket
 
   addRender: =>
     renderConfig =
