@@ -1,5 +1,6 @@
 RealPhysicsJS   = require '../PhysicsJS/'
 ChadTheDinosaur = require './bodies/chad-the-dinosaur'
+RobotChicken = require './bodies/robot-chicken'
 Backdrop        = require './bodies/backdrop'
 config          = require './config'
 _               = require 'lodash'
@@ -9,6 +10,7 @@ class GameRunner
     @PhysicsJS = dependencies.PhysicsJS ? RealPhysicsJS
     @world = @PhysicsJS()
     @screen = width: 0, height: 0
+    @chickens = {}
 
   setScreen: (@screen) =>
 
@@ -29,6 +31,7 @@ class GameRunner
   start: =>
     @addRender()
     @addChad()
+    @addChicken()
     @addBackdrop()
     @addBehaviors()
     @onTick()
@@ -39,6 +42,12 @@ class GameRunner
   addChad: =>
     @dinosaur = new ChadTheDinosaur @screen, PhysicsJS: @PhysicsJS
     @world.add @dinosaur.add()
+
+  addChicken: =>
+    uid = _.random(1000, 1200)
+    chicken = new RobotChicken uid, @screen, PhysicsJS: @PhysicsJS
+    @world.add chicken.add()
+    @chickens[uid] = chicken
 
   addBackdrop: =>
     @backdrop = new Backdrop @screen, PhysicsJS: @PhysicsJS

@@ -132,12 +132,13 @@ describe 'ChadTheDinosaur', ->
         state:
           x: 0
           y: 0
+
     describe 'when called and not moving', ->
       beforeEach ->
         @sut.object.state = pos: x: 10
         @sut.onStep()
 
-      it 'should move 5 to the left', ->
+      it 'should move 2 to the left', ->
         expect(@sut.object.state.pos.x).to.equal 10
 
     describe 'when called while moving left', ->
@@ -147,7 +148,7 @@ describe 'ChadTheDinosaur', ->
         @sut.onStep()
 
       it 'should move 5 to the left', ->
-        expect(@sut.object.state.pos.x).to.equal 5
+        expect(@sut.object.state.pos.x).to.equal 8
 
     describe 'when called while moving right', ->
       beforeEach ->
@@ -156,7 +157,7 @@ describe 'ChadTheDinosaur', ->
         @sut.onStep()
 
       it 'should move 5 to the left', ->
-        expect(@sut.object.state.pos.x).to.equal 15
+        expect(@sut.object.state.pos.x).to.equal 12
 
   describe '->onCollision', ->
     describe 'when called when jumping', ->

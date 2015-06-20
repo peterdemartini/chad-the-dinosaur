@@ -22,6 +22,7 @@ describe 'GameRunner', ->
   describe '->start', ->
     beforeEach ->
       @sut.addChad = sinon.spy()
+      @sut.addChicken = sinon.spy()
       @sut.addBackdrop = sinon.spy()
       @sut.addRender = sinon.spy()
       @sut.addBehaviors = sinon.spy()
@@ -35,6 +36,9 @@ describe 'GameRunner', ->
 
     it 'should call addChad', ->
       expect(@sut.addChad).to.have.been.called
+
+    it 'should call addChicken', ->
+      expect(@sut.addChicken).to.have.been.called
 
     it 'should call addBackdrop', ->
       expect(@sut.addBackdrop).to.have.been.called
