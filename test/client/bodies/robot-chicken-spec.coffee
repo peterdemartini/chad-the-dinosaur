@@ -4,7 +4,8 @@ PhysicsJS = require '../PhysicsJS'
 describe 'RobotChicken', ->
   beforeEach ->
     screen = width: 600, height: 300
-    @sut = new RobotChicken 1002, screen, PhysicsJS: PhysicsJS
+    @lodash = {}
+    @sut = new RobotChicken 1002, screen, PhysicsJS: PhysicsJS, _ : @lodash
 
   it 'should have property PhysicsJS', ->
     expect(@sut.PhysicsJS).to.equal PhysicsJS
@@ -33,6 +34,7 @@ describe 'RobotChicken', ->
 
   describe '->getProperties', ->
     beforeEach ->
+      @lodash.random = sinon.stub().returns 10
       @sut.getImage = sinon.stub().returns image: 'robot-chicken'
       @properties = @sut.getProperties()
 
@@ -42,7 +44,7 @@ describe 'RobotChicken', ->
         view:
           image: 'robot-chicken'
         x: 550
-        y: 150
+        y: 160
         width: 20
         height: 20
         vx: -0.1

@@ -13,8 +13,22 @@ class GameRunner
     @screen = width: 0, height: 0
     @chickens = {}
     @rockets = {}
+    @running = false
+    @asyncEvents = []
 
   setScreen: (@screen) =>
+
+  resume: =>
+    console.log 'resume'
+    _.each @asyncEvents, (async) =>
+      async.event() unless async.id
+
+  pause: =>
+    console.log 'pause'
+    _.each @asyncEvents, (async) =>
+      clearInterval async.id
+      clearTimeout async.id
+      async.id = null
 
   onTick: =>
     @PhysicsJS.util.ticker.on (time) =>
@@ -31,9 +45,10 @@ class GameRunner
         @dinosaur.onCollision impact
 
   start: =>
+    @running = true
     @addRender()
     @addChad()
-    @addChicken()
+    @addChickens()
     @addBackdrop()
     @addBehaviors()
     @onTick()
@@ -44,6 +59,13 @@ class GameRunner
   addChad: =>
     @dinosaur = new ChadTheDinosaur @screen, PhysicsJS: @PhysicsJS
     @world.add @dinosaur.add()
+
+  addChickens: =>
+    @addChicken()
+    async = {}
+    async.id = setInterval @addChicken, _.random(1000, 4000)
+    async.event = @addChickens
+    @asyncEvents.push async
 
   addChicken: =>
     uid = _.random(1000, 1200)

@@ -77,6 +77,8 @@ class ChadTheDinosaur extends DefaultBody
     if @jumping &&  bodyA.typeObj == @TYPE && impact.pos.y == 25
       @jumping = false
       @object.sleep true
+    if bodyB.typeObj == config.ROBOT_CHICKEN.TYPE
+      console.log 'chicken impact', impact
 
 
 module.exports = ChadTheDinosaur

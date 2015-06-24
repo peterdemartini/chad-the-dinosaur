@@ -20,11 +20,14 @@ class RobotChicken extends DefaultBody
     return image
 
   getProperties: =>
+    x = @screen.width - config.ROBOT_CHICKEN.START_X
+    y = @screen.height - config.GRASS.HEIGHT - config.ROBOT_CHICKEN.START_Y
+    y += @_.random -20, 20
     properties =
       uid: @uid
       view: @getImage()
-      x: @screen.width - config.ROBOT_CHICKEN.START_X
-      y: @screen.height - config.GRASS.HEIGHT - config.ROBOT_CHICKEN.START_Y
+      x: x
+      y: y
       width: @width
       height: @height
       vx: config.ROBOT_CHICKEN.VX
