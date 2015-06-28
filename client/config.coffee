@@ -10,7 +10,7 @@ module.exports =
     UID: 1
     START_X:50
     MOVE_DELAY: 50
-    MOVE_X: 2
+    MOVE_X: 8
     HEIGHT:50
     WIDTH:50
     VX: 0.3

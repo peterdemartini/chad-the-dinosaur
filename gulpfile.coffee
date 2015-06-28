@@ -11,6 +11,7 @@ webpackConfig = require './webpack.config'
 gulp.task 'less', ->
   gulp
     .src './client/less/**/*.less'
+    .pipe concat('styles.less')
     .pipe less()
     .pipe concat('styles.css')
     .pipe gulp.dest('./public')

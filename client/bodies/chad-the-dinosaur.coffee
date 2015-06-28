@@ -80,5 +80,4 @@ class ChadTheDinosaur extends DefaultBody
     if bodyB.typeObj == config.ROBOT_CHICKEN.TYPE
       console.log 'chicken impact', impact
 
-
 module.exports = ChadTheDinosaur

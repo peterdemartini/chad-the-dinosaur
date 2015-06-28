@@ -1,35 +1,44 @@
 GameRunner = require './game-runner'
+VIS        = require './vis'
 
 class Starter
   run: =>
-    elementId = 'the-game'
-    @gameRunner = new GameRunner elementId
+    @elementId = 'the-game'
+    @gameRunner = new GameRunner @elementId
     screen =
-      height: $("##{elementId}").height()
-      width: $("##{elementId}").width()
+      height: $("##{@elementId}").height()
+      width: $("##{@elementId}").width()
     @gameRunner.setScreen screen
     @gameRunner.start()
     @bindCommands()
     @listenForPause()
 
+  controlGame: (code) =>
+    console.log 'control code', code
+    switch code
+      when 32 then @gameRunner.fire()
+      when 97 then @gameRunner.left()
+      when 37 then @gameRunner.left()
+      when 65 then @gameRunner.left()
+      when 119 then @gameRunner.up()
+      when 87 then @gameRunner.up()
+      when 38 then @gameRunner.up()
+      when 100 then @gameRunner.right()
+      when 68 then @gameRunner.right()
+      when 39 then @gameRunner.right()
+      when 115 then @gameRunner.down()
+      when 80 then @gameRunner.down()
+      when 40 then @gameRunner.down()
+
   bindCommands: =>
-    document.onkeypress = (event) =>
-      code = event.which ? event.keyCode
-      console.log 'pressed key', code
-      switch code
-        when 32 then @gameRunner.fire()
-        when 97 then @gameRunner.left()
-        when 119 then @gameRunner.up()
-        when 100 then @gameRunner.right()
-        when 115 then @gameRunner.down()
+    $(document).keyup (event) =>
+      @controlGame event.which ? event.keyCode
 
   listenForPause: =>
-    $(window)
-      .focus =>
-        console.l
-        @gameRunner.resume()
-      .blur =>
-        @gameRunner.pause()
+    vis = new VIS
+    vis.start (state) =>
+      return @gameRunner.pause() unless state
+      return @gameRunner.resume()
 
 starter = new Starter
 starter.run()

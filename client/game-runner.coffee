@@ -1,10 +1,11 @@
-RealPhysicsJS   = require '../PhysicsJS/'
-ChadTheDinosaur = require './bodies/chad-the-dinosaur'
-Rocket          = require './bodies/rocket'
-RobotChicken    = require './bodies/robot-chicken'
-Backdrop        = require './bodies/backdrop'
-config          = require './config'
-_               = require 'lodash'
+RealPhysicsJS    = require '../PhysicsJS/'
+ChadTheDinosaur  = require './bodies/chad-the-dinosaur'
+Rocket           = require './bodies/rocket'
+RobotChicken     = require './bodies/robot-chicken'
+Backdrop         = require './bodies/backdrop'
+config           = require './config'
+_                = require 'lodash'
+changingInterval = require 'changing-interval'
 
 class GameRunner
   constructor: (@element, dependencies={}) ->
@@ -14,21 +15,22 @@ class GameRunner
     @chickens = {}
     @rockets = {}
     @running = false
-    @asyncEvents = []
+    @asyncEvents = {}
 
   setScreen: (@screen) =>
 
   resume: =>
     console.log 'resume'
-    _.each @asyncEvents, (async) =>
-      async.event() unless async.id
+    @asyncEvents = _.mapValues @asyncEvents, (async) =>
+      return async.event() unless async.interval.id?
+      return async
 
   pause: =>
     console.log 'pause'
-    _.each @asyncEvents, (async) =>
-      clearInterval async.id
-      clearTimeout async.id
-      async.id = null
+    @asyncEvents = _.mapValues @asyncEvents, (async) =>
+      return async unless async.interval.id?
+      async.interval.clear()
+      return async
 
   onTick: =>
     @PhysicsJS.util.ticker.on (time) =>
@@ -45,10 +47,11 @@ class GameRunner
         @dinosaur.onCollision impact
 
   start: =>
+    console.log 'starting game'
     @running = true
     @addRender()
     @addChad()
-    @addChickens()
+    @asyncEvents.chickens = @addChickens()
     @addBackdrop()
     @addBehaviors()
     @onTick()
@@ -61,11 +64,10 @@ class GameRunner
     @world.add @dinosaur.add()
 
   addChickens: =>
-    @addChicken()
     async = {}
-    async.id = setInterval @addChicken, _.random(1000, 4000)
+    async.interval = changingInterval @addChicken, => _.random(3000, 5000)
     async.event = @addChickens
-    @asyncEvents.push async
+    return async
 
   addChicken: =>
     uid = _.random(1000, 1200)
