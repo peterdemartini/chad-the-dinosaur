@@ -1,5 +1,6 @@
 RobotChicken = require '../../../client/bodies/robot-chicken'
 PhysicsJS = require '../PhysicsJS'
+config       = require '../../../client/config'
 
 describe 'RobotChicken', ->
   beforeEach ->
@@ -47,9 +48,9 @@ describe 'RobotChicken', ->
         y: 160
         width: 20
         height: 20
-        vx: -0.1
-        vy: 0
-        restitution: 0
-        cof: 1
-        treatment: 'kinematic'
-        typeObj: 'robot-chicken'
+        vx: config.ROBOT_CHICKEN.VX
+        vy: config.ROBOT_CHICKEN.VY
+        restitution: config.ROBOT_CHICKEN.RESTITUTION
+        cof: config.ROBOT_CHICKEN.COF
+        treatment: config.ROBOT_CHICKEN.TREATMENT
+        typeObj: config.ROBOT_CHICKEN.TYPE

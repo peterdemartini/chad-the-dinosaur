@@ -5,33 +5,34 @@ config      = require '../config'
 class ChadTheDinosaur extends DefaultBody
   constructor: (screen, dependencies={}) ->
     super screen, dependencies
-    @width = config.CHAD.WIDTH
-    @height = config.CHAD.HEIGHT
+    @config = config.CHAD
+    @width = @config.WIDTH
+    @height = @config.HEIGHT
     @jumping = false
     @movingLeft = false
     @movingRight = false
-    @TYPE = config.CHAD.TYPE
+    @TYPE = @config.TYPE
 
   getImage: =>
     image = new Image
-    image.src = '/assets/dinosaur.svg'
+    image.src = @config.IMAGE_PATH
     image.width = @width
     image.height = @height
     return image
 
   getProperties: =>
     properties =
-      uid: config.CHAD.UID
+      uid: @config.UID
       view: @getImage()
-      x: config.CHAD.START_X
+      x: @config.START_X
       y: @screen.height - config.GRASS.HEIGHT
       width: @width
       height: @height
-      vx: config.CHAD.VX
-      vy: config.CHAD.VY
-      restitution: 1
-      cof: 0
-      typeObj: 'chad-the-dinosaur'
+      vx: @config.VX
+      vy: @config.VY
+      restitution: @config.RESTITUTION
+      cof: @config.COF
+      typeObj: @config.TYPE
     return properties
 
   add: =>
@@ -53,7 +54,7 @@ class ChadTheDinosaur extends DefaultBody
       @movingLeft = false
       @object.sleep true
       callback()
-    _.delay done, config.CHAD.MOVE_DELAY
+    _.delay done, @config.MOVE_DELAY
 
   right: (callback=->) =>
     return callback new Error('already moving') if @isMoving()
@@ -63,14 +64,14 @@ class ChadTheDinosaur extends DefaultBody
       @movingRight = false
       @object.sleep true
       callback()
-    _.delay done, config.CHAD.MOVE_DELAY
+    _.delay done, @config.MOVE_DELAY
 
   isMoving: =>
     @jumping || @movingRight || @movingLeft
 
   onStep: =>
-    @object.state.pos.x -= config.CHAD.MOVE_X if @movingLeft
-    @object.state.pos.x += config.CHAD.MOVE_X if @movingRight
+    @object.state.pos.x -= @config.MOVE_X if @movingLeft
+    @object.state.pos.x += @config.MOVE_X if @movingRight
 
   onCollision: (impact) =>
     {bodyA, bodyB} = impact

@@ -1,5 +1,6 @@
 Rocket = require '../../../client/bodies/rocket'
 PhysicsJS = require '../PhysicsJS'
+config    = require '../../../client/config'
 
 describe 'Rocket', ->
   beforeEach ->
@@ -27,7 +28,7 @@ describe 'Rocket', ->
 
     it 'should return the image', ->
       expect(@image).to.deep.equal
-        src: '/assets/rocket.svg'
+        src: config.ROCKET.IMAGE_PATH
         width: 15
         height: 10
 
@@ -39,15 +40,14 @@ describe 'Rocket', ->
     it 'should return the properties', ->
       expect(@properties).to.deep.equal
         uid: 1202
-        view:
-          image: 'rocket'
+        view: image: 'rocket'
         x: 50
         y: 40
         width: 15
         height: 10
-        vx: 0.3
-        vy: 0
-        restitution: 0
-        cof: 1
-        treatment: 'kinematic'
-        typeObj: 'rocket'
+        vx: config.ROCKET.VX
+        vy: config.ROCKET.VY
+        restitution: config.ROCKET.RESTITUTION
+        cof: config.ROCKET.COF
+        treatment: config.ROCKET.TREATMENT
+        typeObj: config.ROCKET.TYPE

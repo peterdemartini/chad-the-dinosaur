@@ -1,5 +1,6 @@
-Backdrop = require '../../../client/bodies/backdrop'
+Backdrop  = require '../../../client/bodies/backdrop'
 PhysicsJS = require '../PhysicsJS'
+config    = require '../../../client/config'
 
 describe 'Backdrop', ->
   beforeEach ->
@@ -26,16 +27,16 @@ describe 'Backdrop', ->
 
     it 'should call PhysicsJS.body', ->
       properties =
-        uid: 50
+        uid: config.GRASS.UID
         styles:
-          fillStyle: '#4F9400'
+          fillStyle: config.GRASS.FILL_STYLE
         x: 0
         y: 550
-        width: 2000
-        height: 100
-        typeObj: 'ground'
-        treatment: 'static'
-      expect(PhysicsJS.body).to.have.been.calledWith 'rectangle', properties
+        width: @sut.screen.width * 2
+        height: config.GRASS.HEIGHT
+        typeObj: config.GRASS.TYPE
+        treatment: config.GRASS.TREATMENT
+      expect(PhysicsJS.body).to.have.been.calledWith config.GRASS.BODY_TYPE, properties
 
     it 'should return the correct body', ->
       expect(@body).to.deep.equal body: 'ground'

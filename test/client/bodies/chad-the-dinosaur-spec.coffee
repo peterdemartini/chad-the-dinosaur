@@ -1,5 +1,6 @@
 ChadTheDinosaur = require '../../../client/bodies/chad-the-dinosaur'
-PhysicsJS = require '../PhysicsJS'
+PhysicsJS       = require '../PhysicsJS'
+config          = require '../../../client/config'
 
 describe 'ChadTheDinosaur', ->
   beforeEach ->
@@ -45,18 +46,17 @@ describe 'ChadTheDinosaur', ->
 
     it 'should return the properties', ->
       expect(@properties).to.deep.equal
-        uid: 1
-        view:
-          image: 'dinosaur'
-        x: 50
-        y: 200
+        uid: config.CHAD.UID
+        view: image: 'dinosaur'
+        x: config.CHAD.START_X
+        y: @sut.screen.height - config.GRASS.HEIGHT
         width: 50
         height: 50
-        vx: 0.3
-        vy: 0.02
-        restitution: 1
-        cof: 0
-        typeObj: 'chad-the-dinosaur'
+        vx: config.CHAD.VX
+        vy: config.CHAD.VY
+        restitution: config.CHAD.RESTITUTION
+        cof: config.CHAD.COF
+        typeObj: config.CHAD.TYPE
 
   describe '->jump', ->
     describe 'when called when jumping', ->

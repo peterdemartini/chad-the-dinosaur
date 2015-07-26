@@ -4,9 +4,10 @@ config      = require '../config'
 class RobotChicken extends DefaultBody
   constructor: (uid, screen, dependencies={}) ->
     super screen, dependencies
+    @config = config.ROBOT_CHICKEN
     @uid = uid
-    @width = config.ROBOT_CHICKEN.WIDTH
-    @height = config.ROBOT_CHICKEN.HEIGHT
+    @width = @config.WIDTH
+    @height = @config.HEIGHT
 
   add: =>
     @object = @PhysicsJS.body 'rectangle', @getProperties()
@@ -14,14 +15,14 @@ class RobotChicken extends DefaultBody
 
   getImage: =>
     image = new Image
-    image.src = '/assets/robot-chicken.svg'
+    image.src = @config.IMAGE_PATH
     image.width = @width
     image.height = @height
     return image
 
   getProperties: =>
-    x = @screen.width - config.ROBOT_CHICKEN.START_X
-    y = @screen.height - config.GRASS.HEIGHT - config.ROBOT_CHICKEN.START_Y
+    x = @screen.width - @config.START_X
+    y = @screen.height - config.GRASS.HEIGHT - @config.START_Y
     y += @_.random -20, 20
     properties =
       uid: @uid
@@ -30,12 +31,12 @@ class RobotChicken extends DefaultBody
       y: y
       width: @width
       height: @height
-      vx: config.ROBOT_CHICKEN.VX
-      vy: config.ROBOT_CHICKEN.VY
-      restitution: 0
-      cof: 1
-      treatment: 'kinematic'
-      typeObj: config.ROBOT_CHICKEN.TYPE
+      vx: @config.VX
+      vy: @config.VY
+      restitution: @config.RESTITUTION
+      cof: @config.COF
+      treatment: @config.TREATMENT
+      typeObj: @config.TYPE
     return properties
 
 module.exports = RobotChicken

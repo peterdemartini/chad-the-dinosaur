@@ -4,27 +4,30 @@ config      = require '../config'
 class Backdrop extends DefaultBody
   constructor: (screen, dependencies={}) ->
     super screen, dependencies
+    @grassConfig = config.GRASS
+    @skyConfig = config.SKY
+    @sunConfig = config.SUN
 
   add: =>
     return [@addGround(), @addSky(), @addSun()]
 
   addGround: =>
     properties =
-      uid: config.GRASS.UID
+      uid: @grassConfig.UID
       styles:
-        fillStyle: '#4F9400'
-      x: 0
-      y: @screen.height - config.GRASS.HEIGHT + 50
+        fillStyle: @grassConfig.FILL_STYLE
+      x: @grassConfig.START_X
+      y: @screen.height - @grassConfig.HEIGHT + @grassConfig.START_Y
       width: @screen.width * 2
-      height: config.GRASS.HEIGHT
-      typeObj: config.GRASS.TYPE
-      treatment: 'static'
-    @PhysicsJS.body 'rectangle', properties
+      height: @grassConfig.HEIGHT
+      typeObj: @grassConfig.TYPE
+      treatment: @grassConfig.TREATMENT
+    @PhysicsJS.body @grassConfig.BODY_TYPE, properties
 
   addSky: =>
-    @PhysicsJS.body 'rectangle'
+    @PhysicsJS.body @skyConfig.BODY_TYPE
 
   addSun: =>
-    @PhysicsJS.body 'rectangle'
+    @PhysicsJS.body @sunConfig.BODY_TYPE
 
 module.exports = Backdrop
