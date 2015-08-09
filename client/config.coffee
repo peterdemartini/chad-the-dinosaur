@@ -35,19 +35,25 @@ module.exports =
     WIDTH: 20
     VX: -0.1
     VY: 0
+    VOLICITY_X: -0.1
+    VOLICITY_Y: 0
     TYPE:'robot-chicken'
     TREATMENT: 'kinematic'
     RESTITUTION: 0
     COF: 1
     IMAGE_PATH: '/assets/robot-chicken.svg'
+    MASS: 1
   ROCKET:
     MOVE_DELAY: 50
     HEIGHT: 10
     WIDTH: 15
-    VX: 0.3
+    VX: 0.1
     VY: 0
+    VOLICITY_X: 0.5
+    VOLICITY_Y: 0
     RESTITUTION: 0
     COF:1
     TREATMENT: 'kinematic'
     TYPE: 'rocket'
     IMAGE_PATH: '/assets/rocket.svg'
+    MASS: 1

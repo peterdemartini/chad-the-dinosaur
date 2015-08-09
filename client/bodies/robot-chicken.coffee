@@ -13,6 +13,9 @@ class RobotChicken extends DefaultBody
     @object = @PhysicsJS.body 'rectangle', @getProperties()
     @object
 
+  go: =>
+    @object.state.vel.set @config.VOLICITY_X, @config.VOLICITY_Y
+
   getImage: =>
     image = new Image
     image.src = @config.IMAGE_PATH
@@ -37,6 +40,7 @@ class RobotChicken extends DefaultBody
       cof: @config.COF
       treatment: @config.TREATMENT
       typeObj: @config.TYPE
+      mass: @config.MASS
     return properties
 
 module.exports = RobotChicken

@@ -51,3 +51,4 @@ describe 'Rocket', ->
         cof: config.ROCKET.COF
         treatment: config.ROCKET.TREATMENT
         typeObj: config.ROCKET.TYPE
+        mass: config.ROCKET.MASS

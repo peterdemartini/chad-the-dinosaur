@@ -74,6 +74,7 @@ class GameRunner
     chicken = new RobotChicken uid, @screen, PhysicsJS: @PhysicsJS
     @world.add chicken.add()
     @chickens[uid] = chicken
+    chicken.go()
 
   addBackdrop: =>
     @backdrop = new Backdrop @screen, PhysicsJS: @PhysicsJS
@@ -92,6 +93,7 @@ class GameRunner
     uid = _.random(1200, 1500)
     rocket = new Rocket uid, @screen, PhysicsJS: @PhysicsJS
     @world.add rocket.add(@dinosaur.object.state.pos)
+    rocket.go()
     @rockets[uid] = rocket
 
   addRender: =>

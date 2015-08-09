@@ -54,3 +54,4 @@ describe 'RobotChicken', ->
         cof: config.ROBOT_CHICKEN.COF
         treatment: config.ROBOT_CHICKEN.TREATMENT
         typeObj: config.ROBOT_CHICKEN.TYPE
+        mass: config.ROBOT_CHICKEN.MASS
