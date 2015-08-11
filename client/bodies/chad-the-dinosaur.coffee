@@ -33,6 +33,7 @@ class ChadTheDinosaur extends DefaultBody
       restitution: @config.RESTITUTION
       cof: @config.COF
       typeObj: @config.TYPE
+      # treatment: 'kinematic'
     return properties
 
   add: =>
@@ -46,32 +47,27 @@ class ChadTheDinosaur extends DefaultBody
     @object.sleep false
     @jumping = true
 
-  left: (callback=->) =>
+  move: (direction, x, y, callback=->) =>
     return callback new Error('already moving') if @isMoving()
-    @movingLeft = true
+    @movingLeft = true if direction == 'left'
+    @movingRight = true if direction == 'right'
+    @object.state.vel.set x, y
     @object.sleep false
     done = =>
-      @movingLeft = false
+      @movingLeft = false if direction == 'left'
+      @movingRight = false if direction == 'right'
       @object.sleep true
       callback()
     _.delay done, @config.MOVE_DELAY
 
+  left: (callback=->) =>
+    @move 'left', -@config.VELOCITY_X, @config.VELOCITY_Y, callback
+
   right: (callback=->) =>
-    return callback new Error('already moving') if @isMoving()
-    @movingRight = true
-    @object.sleep false
-    done = =>
-      @movingRight = false
-      @object.sleep true
-      callback()
-    _.delay done, @config.MOVE_DELAY
+    @move 'right', @config.VELOCITY_X, @config.VELOCITY_Y, callback
 
   isMoving: =>
     @jumping || @movingRight || @movingLeft
-
-  onStep: =>
-    @object.state.pos.x -= @config.MOVE_X if @movingLeft
-    @object.state.pos.x += @config.MOVE_X if @movingRight
 
   onCollision: (impact) =>
     {bodyA, bodyB} = impact

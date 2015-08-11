@@ -14,7 +14,7 @@ class RobotChicken extends DefaultBody
     @object
 
   go: =>
-    @object.state.vel.set @config.VOLICITY_X, @config.VOLICITY_Y
+    @object.state.vel.set @config.VELOCITY_X, @config.VELOCITY_Y
 
   getImage: =>
     image = new Image

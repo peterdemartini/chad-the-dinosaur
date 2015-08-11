@@ -18,12 +18,14 @@ module.exports =
   CHAD:
     UID: 1
     START_X:50
-    MOVE_DELAY: 50
+    MOVE_DELAY: 100
     MOVE_X: 8
     HEIGHT:50
     WIDTH:50
     VX: 0.3
     VY: 0.02
+    VELOCITY_X: 0.2
+    VELOCITY_Y: 0
     TYPE:'chad-the-dinosaur'
     RESTITUTION: 1
     COF: 0
@@ -35,8 +37,8 @@ module.exports =
     WIDTH: 20
     VX: -0.1
     VY: 0
-    VOLICITY_X: -0.1
-    VOLICITY_Y: 0
+    VELOCITY_X: -0.1
+    VELOCITY_Y: 0
     TYPE:'robot-chicken'
     TREATMENT: 'kinematic'
     RESTITUTION: 0
@@ -49,8 +51,8 @@ module.exports =
     WIDTH: 15
     VX: 0.1
     VY: 0
-    VOLICITY_X: 0.5
-    VOLICITY_Y: 0
+    VELOCITY_X: 0.5
+    VELOCITY_Y: 0
     RESTITUTION: 0
     COF:1
     TREATMENT: 'kinematic'

@@ -39,7 +39,6 @@ class GameRunner
   onStep: =>
     @world.on 'step', =>
       @world.render()
-      @dinosaur.onStep()
 
   onCollision: =>
     @world.on 'collisions:detected', (data) =>
