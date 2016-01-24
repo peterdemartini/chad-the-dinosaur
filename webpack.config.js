@@ -15,13 +15,11 @@ module.exports = {
     extensions: [
       '',
       '.js',
-      // '.cjsx',
       '.coffee'
     ]
   },
   module: {
     loaders: [
-      { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
       { test: /\.coffee$/, loader: 'coffee' }
     ]
   }

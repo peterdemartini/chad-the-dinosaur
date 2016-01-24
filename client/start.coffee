@@ -3,12 +3,10 @@ VIS        = require './vis'
 
 class Starter
   run: =>
-    @elementId = 'the-game'
-    @gameRunner = new GameRunner @elementId
-    screen =
-      height: $("##{@elementId}").height()
-      width: $("##{@elementId}").width()
-    @gameRunner.setScreen screen
+    @gameRunner = new GameRunner document.body
+    @gameRunner.setRenderOptions
+      height: $('body').height()
+      width: $('body').width()
     @gameRunner.start()
     @bindCommands()
     @listenForPause()

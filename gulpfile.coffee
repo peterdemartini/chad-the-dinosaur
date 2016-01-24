@@ -20,9 +20,9 @@ gulp.task 'server', ->
   gulp
     .src 'public'
     .pipe server
-      livereload: true,
-      directoryListing: false,
-      open: true,
+      livereload: true
+      directoryListing: false
+      open: true
       fallback: 'index.html'
 
 gulp.task 'webpack', ->
@@ -34,8 +34,6 @@ gulp.task 'watch', ->
     less: './client/less/**/*.less'
     webpack: [
       './client/**/*.js'
-      './client/**/*.jsx'
-      # './client/**/*.cjsx'
       './client/**/*.coffee'
     ]
 
