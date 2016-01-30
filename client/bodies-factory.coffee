@@ -3,11 +3,12 @@ BodiesMap =
   'Chad'  : require './bodies/chad'
 
 class BodiesFactory
-  constructor: (@engine, @renderOptions) ->
+  constructor: (@renderOptions) ->
     @bodies = _.mapValues BodiesMap, (Body, key) =>
-      return new Body @engine, @renderOptions
+      return new Body @renderOptions
 
-  add: (name) =>
-    @bodies[name].add() if @bodies[name]?
+  add: (name, callback) =>
+    return callback new Error 'Missing Body' unless @bodies[name]?
+    @bodies[name].add callback if @bodies[name]?
 
 module.exports = BodiesFactory

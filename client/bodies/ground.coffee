@@ -2,10 +2,14 @@ _ = require 'lodash'
 {Bodies, World} = require 'matter-js'
 
 class Ground
-  constructor: (@engine, {@width, @height}) ->
+  constructor: ({@width, @height}) ->
 
-  add: =>
-    @body = Bodies.rectangle @width / 2, @height - 30, @width, 60, isStatic: true
-    World.addBody @engine.world, @body
+  add: (callback) =>
+    width = @width / 2
+    height = @height - 30
+    x = @width
+    y = 60
+    @body = Bodies.rectangle width, height, x, y, {isStatic: true}
+    callback null, @body
 
 module.exports = Ground

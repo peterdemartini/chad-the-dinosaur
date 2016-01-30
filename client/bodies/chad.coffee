@@ -1,11 +1,16 @@
 _ = require 'lodash'
-{Bodies, World} = require 'matter-js'
+SvgElement = require '../elements/svg'
 
 class Chad
-  constructor: (@engine, {@width, @height}) ->
+  constructor: ({@width, @height}) ->
 
-  add: =>
-    @body = Bodies.rectangle 100, 40, 40, 40
-    World.addBody @engine.world, @body
+  add: (callback) =>
+    @svg = new SvgElement
+      name: 'dinosaur'
+      x: 100
+      y: 40
+      scale: 0.5
+    @svg.build (error, @body) =>
+      callback null, @body
 
 module.exports = Chad

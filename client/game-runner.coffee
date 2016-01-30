@@ -3,6 +3,7 @@ _                = require 'lodash'
 config           = require './config'
 changingInterval = require 'changing-interval'
 BodiesFactory    = require './bodies-factory'
+async            = require 'async'
 
 {
   Engine,
@@ -14,16 +15,16 @@ BodiesFactory    = require './bodies-factory'
 class GameRunner
   constructor: (@element) ->
     @renderOptions = config.RENDER_OPTIONS
-    console.log '@renderOptions', @renderOptions
 
   start: =>
     @engine = Engine.create
       render:
         element: @element
         options: @renderOptions
-    @bodies = new BodiesFactory @engine, @renderOptions
-    @_setup()
-    Engine.run @engine
+    @bodies = new BodiesFactory @renderOptions
+    @_setup (error) =>
+      return console.error 'Error', error if error?
+      Engine.run @engine
 
   setRenderOptions: (@renderOptions) =>
     {@width, @height} = @renderOptions
@@ -38,8 +39,11 @@ class GameRunner
   pause: =>
   resume: =>
 
-  _setup: =>
-    @bodies.add 'Ground'
-    @bodies.add 'Chad'
+  _setup: (callback) =>
+    async.map ['Ground', 'Chad'], @bodies.add, (error, bodies) =>
+      return callback error if error?
+      _.each bodies, (body) =>
+        World.addBody @engine.world, body
+      callback()
 
 module.exports = GameRunner
