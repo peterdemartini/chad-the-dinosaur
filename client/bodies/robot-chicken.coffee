@@ -1,17 +1,16 @@
 _ = require 'lodash'
 SvgElement = require '../elements/svg'
 
-class Chad
+class RobotChicken
   constructor: ({@width, @height}) ->
 
   add: (callback) =>
     @svg = new SvgElement
-      name: 'dinosaur2'
-      x: 100
-      y: 40
-      scale: 0.3
-      color: '#fff'
+      name: 'robot-chicken'
+      x: 1
+      y: 1
+      scale: 0.1
     @svg.build (error, @body) =>
       callback null, @body
 
-module.exports = Chad
+module.exports = RobotChicken

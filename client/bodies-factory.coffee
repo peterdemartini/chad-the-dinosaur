@@ -1,6 +1,7 @@
 BodiesMap =
-  'Ground': require './bodies/ground'
-  'Chad'  : require './bodies/chad'
+  'Ground'      : require './bodies/ground'
+  'Chad'        : require './bodies/chad'
+  'RobotChicken': require './bodies/robot-chicken'
 
 class BodiesFactory
   constructor: (@renderOptions) ->

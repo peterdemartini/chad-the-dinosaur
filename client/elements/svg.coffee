@@ -1,23 +1,14 @@
 _            = require 'lodash'
-{Common,Svg,Vertices,Bodies} = require 'matter-js'
-
-DEFAULT_COLORS = [
-  '#556270'
-  '#4ECDC4'
-  '#C7F464'
-  '#FF6B6B'
-  '#C44D58'
-]
+{Svg,Vertices,Bodies} = require 'matter-js'
 
 class SvgElement
-  constructor: ({@name,@colors,@x,@y,@options,@scale}) ->
+  constructor: ({@name,@color,@x,@y,@options,@scale}) ->
 
   getOptions: =>
-    color = Common.choose(@colors ? DEFAULT_COLORS)
     bodyOptions =
       render:
-        fillStyle: color
-        strokeStyle: color
+        fillStyle: @color
+        strokeStyle: @color
     _.extend {}, bodyOptions, @options
 
   get: (callback) =>
@@ -27,13 +18,14 @@ class SvgElement
     vertexSets = []
     $(data).find('path').each (i, path) =>
       points = Svg.pathToVertices path, 30
-      vertexSets.push Vertices.scale points, @scale
+      vertexSets.push Vertices.scale points, @scale, @scale, 0
     return vertexSets
 
   build: (callback) =>
     @get (error, data) =>
       return callback error if error?
       body = Bodies.fromVertices @x, @y, @getVertexSets(data), @getOptions(), true
+      console.log 'body', body
       return callback new Error 'Invalid Body' unless body?
       callback null, body
 
